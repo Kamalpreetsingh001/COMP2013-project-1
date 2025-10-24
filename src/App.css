@@ -42,48 +42,49 @@
   display: flex;
   justify-content: space-between;
 
-  /* max-width: 800px; */
-  /* border: 1px solid white; */
+ max-width: 1000px; 
+   border: 1px solid white; 
 }
 
 .CartContainer {
-  width: 25%;
+  width: 35%;
   justify-content: center;
 
-  /* position: sticky; */
-  /* top: 0; Adjust this value as needed */
-  /* max-height: 100vh; Ensure it doesn't exceed the viewport height */
-  /* overflow-y: auto; Add scroll if content exceeds the container height */
+  /* position: sticky; 
+  top: 0; 
+   max-height: 100vh; /*Ensure it doesn't exceed the viewport height */
+ /*overflow-y: auto; /*Add scroll if content exceeds the container height */
 
-  /* border: 1px solid white; */
+  /*border: 1px solid white; */
 }
 
 .CartCard {
-  display: flex;
-  /* flex-direction: column; */
+  display: right;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   border: 2px wheat solid;
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
-  background-color: rgb(43, 48, 54);
+  background-color: white;
+  box-shadow: #61dafbaa 0 0 10px 5px;
 }
 
 .CartCardInfo {
-  /* display: flex;
-  justify-content: space-around; */
-  width: 50%;
+   display: flex; 
+  justify-content: space-around; 
+  width: 100%;
 }
 
 .ProductsContainer {
-  width: 75%;
-  max-width: 800px;
+  width: 90%;
+  max-width: 1000px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* border: 1px solid white; */
+  border: 1px solid white;
 }
 
 .ProductCard {
@@ -92,6 +93,7 @@
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
+  
 }
 
 .ProductQuantityDiv {
@@ -121,7 +123,7 @@ img {
 }
 
 .counter-container {
-  /* border: 1px solid white; */
+  border: 1px solid white;
   display: flex;
   width: 70%;
   height: 20px;
@@ -151,3 +153,6 @@ img {
   background-color: green;
   width: 50%;
 }
+
+
+
