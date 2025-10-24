@@ -14,6 +14,8 @@ export default function ProductsContainer({
         <ProductCard
           key={product.id}
           {...product}
+
+          // find the corresponding product quantity object based on matching id
           productQuantity={productQuantity.find((prod) => prod.id === product.id)}
            
           handleAddToQuantity={handleAddToQuantity}

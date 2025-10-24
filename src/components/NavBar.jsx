@@ -3,9 +3,10 @@ import cartFullPng from "../assets/cart-full.png"
 
 export default function  NavBar({ TotalcartCount })  {
   
+    // itt determine which cart image to show full or empty
   const cartImage = TotalcartCount > 0
-    ? cartFullPng
-    : cartEmptyPng;
+    ? cartFullPng  // show when cart is full
+    : cartEmptyPng; // show when card is empty
 
   return (
     <div

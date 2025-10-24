@@ -9,17 +9,20 @@ export default function ProductCard({
   handleRemoveQuantity,
   handleAddToCart,
 }) {
+
+    // if the product data is available, do not render anything
   if (!productQuantity) return null; 
 
   return (
     <div className="ProductCard">
+        {/*display product image */}
       <img src={image} alt={productName}/>
       <h3>{productName}</h3>
       <h3>{brand}</h3>
       
       <h4>Price: ${productQuantity.price.replace("$","")}</h4>
      
-      
+      {/* quantity counter section with + - buttons */}
       <div className="counter-container">
 
         <QuantityCounter
@@ -32,7 +35,7 @@ export default function ProductCard({
         Total Price: $
         {(productQuantity.quantity * productQuantity.price).toFixed(2)}
       </h4>
-
+{/*button to add product to cart  */}
       <button onClick={() => handleAddToCart(productQuantity)}>Add To Cart</button>
     </div>
   );

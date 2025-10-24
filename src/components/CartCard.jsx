@@ -1,5 +1,6 @@
 import QuantityCounter from "./QuantityCounter";
 
+// CartCard component displays each item inside the cart
 export default function CartCard({
     id,
     image,
@@ -13,39 +14,44 @@ export default function CartCard({
 }){
 
     return (
+        // Main container for each cart item
         <div className="CartCard">
+            {/* Product image */}
             <img src={image} alt={productName}  />
+
+            {/* Product information section */}
             <div classname="CartCardInfo">
-            <h2>{productName}</h2>
-            <h2>{brand}</h2>
-            <p>Quantity: {quantity}</p>
+                {/* Display product name and brand */}
+                <h2>{productName}</h2>
+                <h2>{brand}</h2>
 
+                {/* Display quantity of the product in the cart */}
+                <p>Quantity: {quantity}</p>
 
-
+                {/* Display total price for this product based on quantity and current price */}
+                <p>Total Price: ${(quantity * currentPrice).toFixed(2)}</p>
             
-            <p>Total Price: ${(quantity * currentPrice).toFixed(2)}</p>
-            
-            <QuantityCounter 
-            quantity={quantity}
-             increase ={handleIncreaseToCart}
-            decrease={handleDecreaseTocart}
-          
+                {/* QuantityCounter component allows increasing or decreasing quantity */}
+                <QuantityCounter 
+                    quantity={quantity}
+                    increase={handleIncreaseToCart}
+                    decrease={handleDecreaseTocart}
+                />
 
+                {/* Buttons section for removing an item from the cart */}
+                <div className="CartListBtns">
 
-/>
-
-
-            <div className="CartListBtns">
-
-            <button className="RemoveButton"
-            onClick={() => {
-                handleRemoveFromCart({id, productName, brand, quantity, currentPrice});
-            }}
-            >
-                Remove Item
-            </button>
+                    {/* Remove Item button calls handleRemoveFromCart with item details */}
+                    <button 
+                        className="RemoveButton"
+                        onClick={() => {
+                            handleRemoveFromCart({id, productName, brand, quantity, currentPrice});
+                        }}
+                    >
+                        Remove Item
+                    </button>
+                </div>
             </div>
-</div>
         </div>
     )
 }

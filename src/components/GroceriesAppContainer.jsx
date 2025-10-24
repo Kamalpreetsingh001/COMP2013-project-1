@@ -4,29 +4,22 @@ import CartContainer from "./CartContainer";
 import NavBar from "./NavBar";
 
 export default function GroceriesAppContainer({ products }) {
-  const [productQuantity, setProductQuantity] = useState(
+  const [productQuantity, setProductQuantity] = useState(   // usestate to track each product quantity and price 
     products.map((prod) => {
       return {
         id: prod.id,
         quantity: 0, 
-        price: prod.price.replace("$", ""), 
+        price: prod.price.replace("$", ""),  // use to remove $ from price 
         currentPrice: prod.price.replace("$", ""), 
       };
     })
   );
 
+  // usestate to manage all items added to the cart
   const [cart, setCart] = useState([]);
 
-  const handleOnChangePrice = (productId, e) => {
-    const newProductQuantity = productQuantity.map((prod) => {
-      if (prod.id === productId) {
-        return { ...prod, currentPrice: e.target.value.replace("$","") };
-      }
-      return prod;
-    });
-    setProductQuantity(newProductQuantity);
-  };
-
+  
+// increase the quantity for a product before adding to cart
   const handleAddToQuantity = (productId) => {
     const newProductQuantity = productQuantity.map((prod) => {
       if (prod.id === productId) {
@@ -37,6 +30,8 @@ export default function GroceriesAppContainer({ products }) {
     setProductQuantity(newProductQuantity);
   };
 
+
+  // decrease the quantity for a product before adding to cart
   const handleRemoveQuantity = (productId) => {
     const newProductQuantity = productQuantity.map((prod) => {
       if (prod.id === productId && prod.quantity > 0) {
@@ -47,7 +42,7 @@ export default function GroceriesAppContainer({ products }) {
     setProductQuantity(newProductQuantity);
   };
 
-
+// add selected product to cart 
   const handleAddToCart = (productToAdd) =>{
     const currentProduct = products.find((prod) => prod.id === productToAdd.id );
 
@@ -59,6 +54,8 @@ export default function GroceriesAppContainer({ products }) {
     }
     
     if (!productInCart) {
+
+        // add new item to cart if not already present
         setCart((prevCart) => {
             return [
                 ...prevCart,
@@ -70,7 +67,7 @@ export default function GroceriesAppContainer({ products }) {
             ];
         });
     }else {
-   
+   // if item already exists, update its quantity and price
     setCart((prevCart) =>
       prevCart.map((item) =>
         item.id === productToAdd.id
@@ -86,7 +83,7 @@ export default function GroceriesAppContainer({ products }) {
   };
 
 
-// below code is used to remove product from cart 
+// below code is used to remove specific product from cart 
   const handleRemoveFromCart = (cartItem) => {
    
        const filteredCart = cart.filter((item) => item.id !== cartItem.id);
@@ -97,6 +94,7 @@ export default function GroceriesAppContainer({ products }) {
   };
 
 
+  // increse quantity of an item already in the cart
   const handleIncreaseToCart = (productId) => {
   const updatedCart = cart.map((item) => {
     if (item.id === productId) {
@@ -107,6 +105,8 @@ export default function GroceriesAppContainer({ products }) {
   setCart(updatedCart);
 };
 
+
+// decrease quantity of an item already in the cart
   const handleDecreaseTocart = (productId) => {
   const updatedCart = cart.map((item) => {
     if (item.id === productId && item.quantity > 1) {
@@ -144,7 +144,7 @@ for (let i = 0; i < cart.length; i++) {
       <ProductsContainer
         data={products} 
         productQuantity={productQuantity}
-        handleOnChangePrice={handleOnChangePrice}
+        
         handleAddToQuantity={handleAddToQuantity}
         handleRemoveQuantity={handleRemoveQuantity}
         handleAddToCart={handleAddToCart}
