@@ -1,5 +1,5 @@
 #root {
-  width: 100%;
+  width: 200%;
   max-width: 1200px;
   min-width: 1150px;
   margin: 0 auto;
@@ -38,7 +38,7 @@
 }
 
 .GroceriesApp-Container {
-  width: 100%;
+  width: 1000%;
   display: flex;
   justify-content: space-between;
 
@@ -64,7 +64,7 @@
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  border: 2px wheat solid;
+  border:2px wheat solid;
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
@@ -79,8 +79,8 @@
 }
 
 .ProductsContainer {
-  width: 90%;
-  max-width: 1000px;
+  width: 80%;
+  max-width: 1500px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -88,7 +88,7 @@
 }
 
 .ProductCard {
-  width: 20%;
+  width: 40%;
   border: 2px wheat solid;
   border-radius: 10px;
   margin: 10px;
@@ -125,7 +125,7 @@ img {
 .counter-container {
   border: 1px solid white;
   display: flex;
-  width: 70%;
+  width: 120%;
   height: 20px;
   justify-content: space-around;
   align-items: center;
@@ -152,6 +152,14 @@ img {
 #BuyButton {
   background-color: green;
   width: 50%;
+}
+.productform {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: rgba(0,0,0,0.05) 0 2px 8px;
 }
 
 

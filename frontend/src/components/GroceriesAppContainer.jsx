@@ -1,19 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import ProductsContainer from "./ProductsContainer";
 import CartContainer from "./CartContainer";
 import NavBar from "./NavBar";
+import Productform from "./productform";
+export default function GroceriesAppContainer() {
 
-export default function GroceriesAppContainer({ products }) {
-  const [productQuantity, setProductQuantity] = useState(   // usestate to track each product quantity and price 
-    products.map((prod) => {
-      return {
-        id: prod.id,
-        quantity: 0, 
-        price: prod.price.replace("$", ""),  // use to remove $ from price 
-        currentPrice: prod.price.replace("$", ""), 
-      };
-    })
-  );
+ 
+  const [productQuantity, setProductQuantity] = useState([]); // usestate to track each product quantity and price 
+    const[formData,setFormData] = useState({
+
+      name: "",
+      brand:"",
+      image: "",
+      price: "$",
+    });
+
+    const [postresponse, setPostResponse] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+useEffect(() => {
+  handleProductsDB();
+}, [postresponse]);
+
+
+ const handleProductsDB = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/products");
+    setProductQuantity(response.data);
+    const updatedProducts = response.data.map((prod) => ({
+      ...prod,
+      quantity: 0,
+      currentPrice: prod.price.replace("$", ""),
+    }));
+
+    setProductQuantity(updatedProducts);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 
   // usestate to manage all items added to the cart
   const [cart, setCart] = useState([]);
@@ -44,7 +69,7 @@ export default function GroceriesAppContainer({ products }) {
 
 // add selected product to cart 
   const handleAddToCart = (productToAdd) =>{
-    const currentProduct = products.find((prod) => prod.id === productToAdd.id );
+    const currentProduct = productQuantity.find((prod) => prod.id === productToAdd.id );
 
     const productInCart = cart.find((item) => item.id === productToAdd.id);
 
@@ -133,21 +158,131 @@ for (let i = 0; i < cart.length; i++) {
 }
 
 
+// handle to reste the form 
 
+const handleResetForm = () => {
+setFormData({
+
+      name: "",
+      brand: "",
+      image: "",
+      price: "",
+    });
+}
+// handle th"e submission of data 
+
+const handleonSubmit = async(e) => {
+  e.preventDefault();
+  try{
+    if(isEditing){
+      handleOnUpdate(formData._id);
+      handleResetForm();
+      setIsEditing(false);
+
+    }else{
+
+
+    await axios.post("http://localhost:3000/products", formData).then((response) => {setPostResponse(response.data.message);
+      console.log(response);
+    })
+    .then(() =>
+       handleResetForm()
+    );
+  }
+  }catch(error) {
+    console.log(error.message);
+  }
+};
+
+// handle the onChange event for the form
+
+const handleonChange = (e) => {
+  setFormData((prevData) => {
+    return { ...prevData, [e.target.name]: e.target.value};
+  })
+
+};
+
+
+// handle to delete on product by id
+
+const handleOnDelete = async(id) => {
+  try{
+    const response = await axios.delete(`http://localhost:3000/products/${id}`);
+   setPostResponse(response.data.message);
+  }catch(error){
+    console.log(error.message);
+  }
+}
+
+// handle the edition of one product by its id
+const handleOnEdit = async (id) => {
+  try{
+    const productToEdit = await axios.get(`http://localhost:3000/products/${id}`);
+
+    setFormData({
+     name: productToEdit.data.productName,
+      brand: productToEdit.data.brand,
+      image: productToEdit.data.image,
+      price: productToEdit.data.price.replace("$", ""),
+      _id: productToEdit.data._id,
+    });
+
+    setIsEditing(true);
+
+
+  }catch(error) {console.log(error);
+
+}
+
+};
+
+
+// handle updating the api patch route
+
+const handleOnUpdate = async (id) => {
+
+  try{
+const result = await axios.patch(`http://localhost:3000/products/${id}`,
+  formData
+);
+setPostResponse(result.data.message)
+
+  }catch(error){
+    console.log(error);
+  }
+
+
+
+}
 
   return (
     <div id="root">
+      
         <NavBar TotalcartCount= {cart.length} />
     <div className="GroceriesApp-Container">
-
+      <div className= "productform">
+       <Productform 
+      name={formData.name}
+      brand={formData.brand}
+      image={formData.image}
+      price={formData.price}
+      handleonSubmit={handleonSubmit}
+      handleonChange={handleonChange}
+      isEditing={isEditing}
+       /></div>
         <div className="ProductsContainer">
+         
       <ProductsContainer
-        data={products} 
+      
+        data={productQuantity} 
         productQuantity={productQuantity}
         
         handleAddToQuantity={handleAddToQuantity}
         handleRemoveQuantity={handleRemoveQuantity}
         handleAddToCart={handleAddToCart}
+        handleOnDelete={handleOnDelete}
+        handleOnEdit={handleOnEdit}
       />
     </div>
     <div className="CartContainer">

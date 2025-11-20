@@ -1,6 +1,7 @@
 import QuantityCounter from "./QuantityCounter";
 
 export default function ProductCard({
+ _id,
   productQuantity,
   image,
   productName,
@@ -8,6 +9,8 @@ export default function ProductCard({
   handleAddToQuantity,
   handleRemoveQuantity,
   handleAddToCart,
+  handleOnDelete,
+  handleOnEdit,
 }) {
 
     // if the product data is available, do not render anything
@@ -32,11 +35,12 @@ export default function ProductCard({
       </div>
 
        <h4>
-        Total Price: $
-        {(productQuantity.quantity * productQuantity.price).toFixed(2)}
+        Total Price:  ${(productQuantity.quantity * productQuantity.currentPrice).toFixed(2)}
       </h4>
 {/*button to add product to cart  */}
       <button onClick={() => handleAddToCart(productQuantity)}>Add To Cart</button>
+      <button onClick={() => handleOnEdit(_id)}>Edit</button>
+      <button onClick={() => handleOnDelete(_id)}>Delete</button>
     </div>
   );
 }
