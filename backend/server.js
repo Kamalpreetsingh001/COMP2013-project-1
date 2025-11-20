@@ -55,7 +55,7 @@ server.post("/products", async (request, response) => {
     });
     try {
             await newproduct.save();
-            response.status(200).send({message: "Product is added successfully! "});
+            response.status(200).send({message: `Product is added successfully! `});
     }catch(error) {
         response.status(400).send({message: error.message})
     }
@@ -67,7 +67,7 @@ server.delete("/products/:id", async (request,response) => {
     const {id} = request.params;
     try{
         await Products.findByIdAndDelete(id);
-        response.send({message: "Product is delete"});
+        response.send({message: `Product is delete`});
 
     }catch(error) {
         response.status(400).send({message: error.message});
@@ -103,7 +103,9 @@ try {
         image,
         price,
     });
-    response.send({message: `Product has been updated with the id ${id}`})
+    response.send({message: `Product has been updated with the id ${id}`,
+    date: new Date(Date.now())
+    })
 
 }catch(error){
 

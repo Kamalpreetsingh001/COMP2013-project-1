@@ -210,6 +210,7 @@ const handleOnDelete = async(id) => {
   try{
     const response = await axios.delete(`http://localhost:3000/products/${id}`);
    setPostResponse(response.data.message);
+   console.log(response);
   }catch(error){
     console.log(error.message);
   }
@@ -246,7 +247,7 @@ const handleOnUpdate = async (id) => {
 const result = await axios.patch(`http://localhost:3000/products/${id}`,
   formData
 );
-setPostResponse(result.data.message)
+setPostResponse({message: result.data.message, date: result.data.date })
 
   }catch(error){
     console.log(error);
@@ -270,7 +271,11 @@ setPostResponse(result.data.message)
       handleonSubmit={handleonSubmit}
       handleonChange={handleonChange}
       isEditing={isEditing}
-       /></div>
+       />
+       <p style={{ color: "green"}}> {postresponse.message}</p>
+       </div>
+
+
         <div className="ProductsContainer">
          
       <ProductsContainer
